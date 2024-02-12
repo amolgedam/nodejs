@@ -9,15 +9,20 @@ const app = express();
 /* CSS Assets */
 app.use(express.static('public'));
 
-app.get('/', (req, res)=>{
-    res.render("home");
-});
-
-
 /* Set Template engine */
-app.use(expressLayout);
 app.set('views', path.join(__dirname, '/resources/views'))
 app.set('view engine', 'ejs');
+app.use(expressLayout);
+
+/* Routes */
+app.get('/', (req, res)=>{
+    res.render('home');
+});
+
+app.get('/cart', (req, res)=>{
+    res.render("customers/cart");
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
