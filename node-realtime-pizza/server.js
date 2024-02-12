@@ -15,22 +15,7 @@ app.set('view engine', 'ejs');
 app.use(expressLayout);
 
 /* Routes */
-app.get('/', (req, res)=>{
-    res.render('home');
-});
-
-app.get('/cart', (req, res)=>{
-    res.render("customers/cart");
-});
-
-app.get('/login', (req, res)=>{
-    res.render("auth/login");
-});
-
-app.get('/register', (req, res)=>{
-    res.render("auth/register");
-});
-
+require('./routes/web.js')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{

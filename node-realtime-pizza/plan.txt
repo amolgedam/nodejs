@@ -20,6 +20,9 @@
 #   Create Cart page
     - Order summary section
     - empty cart section
+#   Move routes to Routs
+
+
 #   Create Order Controller and link it in server.js
 #   Create Order view with table for customer and admin
 #   Create Order single page with status
