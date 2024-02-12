@@ -7,10 +7,14 @@
         -   nodemon   
 #   Create express server - Create a server.js file
 
+=================================================================================
 #   Git setup
 
+=================================================================================
+#   Install Laravel Mix
+    -   setup js and css
 
-
+=================================================================================
 #   Create Home page using HTML and CSS
     - including tailwind CSS
 #   Create Cart page
