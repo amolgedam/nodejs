@@ -6,6 +6,9 @@ const path = require('path');
 
 const app = express();
 
+/* CSS Assets */
+app.use(express.static('public'));
+
 app.get('/', (req, res)=>{
     res.render("home");
 });
