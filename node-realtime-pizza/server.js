@@ -1,13 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const ejs = require('ejs');
 const expressLayout = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 
+const session = require('express-session');
+const flash = require('express-flash');
+const MongoDbStore = require('connect-mongo');
 
 /* DB Connections */
 const mongoURI = 'mongodb+srv://amolgedam1994:22H3e67bG7MVUmMI@mernbookingapp.stvtb3m.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(mongoURI)
+const connection = mongoose.connect(mongoURI)
 .then(() => {
     console.log('Connected to MongoDB');
 })
@@ -15,29 +20,28 @@ mongoose.connect(mongoURI)
     console.error('Error connecting to MongoDB:', error);
 });
 
-
-
-/* mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: true
-});
-const connection = mongoose.connection;
-connection.then(()=>{
-    console.log('Database connections...');
-}).catch(err=>{
-    console.log('Unable to connect Database', err);
-}) */
-
-
-
-
 const path = require('path');
 
 const app = express();
 
-/* CSS Assets */
+/* Session Store => sessioon store in DB else store in Memory */
+let mongoStoreOption = {
+    mongoUrl: mongoURI,
+    collection: 'sessions'
+};
+
+/* Session config */
+app.use(session({
+    secret: process.env.COOKIES_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoDbStore.create(mongoStoreOption),
+    cookie: {maxAge: 1000 * 60 * 60 * 24} // 24 H
+    // cookie: {maxAge: 1000 * 15} // 15 sec 
+}));
+app.use(flash());
+
+/* Assets */
 app.use(express.static('public'));
 
 /* Set Template engine */
