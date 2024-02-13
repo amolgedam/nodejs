@@ -44,6 +44,15 @@ app.use(flash());
 /* Assets */
 app.use(express.static('public'));
 
+app.use(express.json());
+
+/* Global Middleware */
+app.use((req, res, next)=>{
+    /* Set session on local */
+    res.locals.session = req.session;
+    next();
+});
+
 /* Set Template engine */
 app.set('views', path.join(__dirname, '/resources/views'))
 app.set('view engine', 'ejs');
