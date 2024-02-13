@@ -10,7 +10,7 @@ const flash = require('express-flash');
 const MongoDbStore = require('connect-mongo');
 
 /* DB Connections */
-const mongoURI = 'mongodb+srv://amolgedam1994:22H3e67bG7MVUmMI@mernbookingapp.stvtb3m.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGO_DB_URL;
 
 const connection = mongoose.connect(mongoURI)
 .then(() => {
