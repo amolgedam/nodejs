@@ -23,9 +23,6 @@ function cartController(){
 
             let cart = req.session.cart;
 
-            console.log("req.session.cart => ", req.session.cart);
-            console.log("items => ", req.body);
-
             /* Check if item does not exist in cart */
             if(!cart.items[req.body._id]){
                 cart.items[req.body._id] = {
