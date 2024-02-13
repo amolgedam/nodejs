@@ -9,6 +9,8 @@ const session = require('express-session');
 const flash = require('express-flash');
 const MongoDbStore = require('connect-mongo');
 
+const passport = require('passport');
+
 /* DB Connections */
 const mongoURI = process.env.MONGO_DB_URL;
 
@@ -23,6 +25,13 @@ const connection = mongoose.connect(mongoURI)
 const path = require('path');
 
 const app = express();
+
+/* Passport config */
+const passportInit = require('./app/config/passport.js');
+passportInit(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* Session Store => sessioon store in DB else store in Memory */
 let mongoStoreOption = {
