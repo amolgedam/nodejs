@@ -1,3 +1,6 @@
+
+const guestMiddleware = require('../app/http/middlewares/guest.js');
+
 const homeController = require('../app/http/controllers/homeController.js');
 const authController = require('../app/http/controllers/authController.js');
 const cartController = require('../app/http/controllers/customers/cartController.js');
@@ -6,10 +9,10 @@ function initRoutes(app){
 
     app.get('/', homeController().index);
         
-    app.get('/login', authController().login);
+    app.get('/login', guestMiddleware, authController().login);
     app.post('/login', authController().postLogin);
 
-    app.get('/register', authController().register);
+    app.get('/register', guestMiddleware, authController().register);
     app.post('/register', authController().postRegister);
 
     app.get('/cart', cartController().index);

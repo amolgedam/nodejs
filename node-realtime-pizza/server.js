@@ -46,7 +46,6 @@ app.use(flash());
 /* Passport config */
 const passportInit = require('./app/config/passport.js');
 passportInit(passport);
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -60,6 +59,7 @@ app.use(express.json());
 app.use((req, res, next)=>{
     /* Set session on local */
     res.locals.session = req.session;
+    res.locals.user = req.user;
     next();
 });
 
