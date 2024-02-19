@@ -9,6 +9,15 @@ function authController(){
             res.render("auth/login");
         },
         async postLogin(req, res, next){
+
+            /* Passport Custom Message */
+            const {email, password} = req.body;
+            if(!email || !password){
+                req.flash('error', 'All fields are required!');
+                return res.redirect('/register');
+            }
+
+
             passport.authenticate('local', (err, user, info)=>{
                 if(err){
                     req.flash('error', info.message);
