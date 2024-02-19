@@ -26,13 +26,6 @@ const path = require('path');
 
 const app = express();
 
-/* Passport config */
-const passportInit = require('./app/config/passport.js');
-passportInit(passport);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 /* Session Store => sessioon store in DB else store in Memory */
 let mongoStoreOption = {
     mongoUrl: mongoURI,
@@ -49,6 +42,13 @@ app.use(session({
     // cookie: {maxAge: 1000 * 15} // 15 sec 
 }));
 app.use(flash());
+
+/* Passport config */
+const passportInit = require('./app/config/passport.js');
+passportInit(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* Assets */
 app.use(express.static('public'));

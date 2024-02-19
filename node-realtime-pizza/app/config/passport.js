@@ -5,7 +5,7 @@ const User = require('../models/user.js');
 
 function init(passport){
 
-    passport.use(new LocalStartegy({ username: 'email' }, async(email, password, done)=>{
+    passport.use(new LocalStartegy({ usernameField: 'email' }, async(email, password, done)=>{
         /* Login logic */
 
         /* Check mail exist */
@@ -16,7 +16,7 @@ function init(passport){
 
         bcrypt.compare(password, existingUser.password).then(match=>{
             if(match){
-                return done(null, user, { message: 'login successfully' });
+                return done(null, existingUser, { message: 'login successfully' });
             }
 
             return done(null, false, { message: 'Wrong username or password!' });
@@ -29,13 +29,22 @@ function init(passport){
 
     /* What we store after login */
     passport.serializeUser((user, done)=>{
+        console.log("passport => serializeUser => user =>", user);
+        console.log("passport => serializeUser => done => ", done);
+
         done(null, user._id);
     });
 
     passport.deserializeUser((id, done)=>{
-        User.findById(id, (err, user)=>{
+        /* User.findById(id, (err, user)=>{
             done(err, user);
-        });
+        }); */
+        const user = User.findOne({'_id': id});
+        if(!user){
+            done(null, false, { message: 'User not found!' });   
+        }
+
+        done(null, user);
     });
 
 }
