@@ -1,3 +1,6 @@
+npx mix watch
+
+
 #   Create DIR structure
 #   Create a NPM project and install all dependencies
     -   Dependencies

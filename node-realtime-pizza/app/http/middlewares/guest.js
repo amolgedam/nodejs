@@ -5,5 +5,4 @@ function guest(req, res, next){
     return res.redirect('/');
 }
 
-
 module.exports = guest;

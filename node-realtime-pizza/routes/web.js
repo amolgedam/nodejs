@@ -1,9 +1,12 @@
 
 const guestMiddleware = require('../app/http/middlewares/guest.js');
+const authMiddleware = require('../app/http/middlewares/auth.js');
 
 const homeController = require('../app/http/controllers/homeController.js');
 const authController = require('../app/http/controllers/authController.js');
 const cartController = require('../app/http/controllers/customers/cartController.js');
+const orderController = require('../app/http/controllers/customers/orderController.js');
+
 
 function initRoutes(app){
 
@@ -20,6 +23,14 @@ function initRoutes(app){
     app.get('/cart', cartController().index);
     app.post('/update-cart', cartController().update);
 
+    /* Customer Routes */
+    app.post('/orders', authMiddleware, orderController().store);
+    app.get('/customer/orders', authMiddleware, orderController().index);
+
+
+
+
+    
 }
 
 

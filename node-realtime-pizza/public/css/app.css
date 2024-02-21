@@ -278,6 +278,9 @@ section.hero {
   border-color: #FFF;
   color: #FFF;
 }
+.add-to-cart:focus {
+  outline: none;
+}
 
 .btn-primary {
   background: #FE5F1E !important;
@@ -303,6 +306,10 @@ section.login a {
 }
 section.login a:hover {
   color: #B23301;
+}
+
+a.link {
+  color: #FE5F1E;
 }
 
 /* Noty alert css */
