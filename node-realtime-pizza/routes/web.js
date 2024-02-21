@@ -1,12 +1,15 @@
 
 const guestMiddleware = require('../app/http/middlewares/guest.js');
 const authMiddleware = require('../app/http/middlewares/auth.js');
+const adminMiddleware = require('../app/http/middlewares/admin.js');
 
 const homeController = require('../app/http/controllers/homeController.js');
 const authController = require('../app/http/controllers/authController.js');
 const cartController = require('../app/http/controllers/customers/cartController.js');
 const orderController = require('../app/http/controllers/customers/orderController.js');
 
+/* Admin Controllers */
+const adminOrderController = require('../app/http/controllers/admin/orderController.js');
 
 function initRoutes(app){
 
@@ -30,7 +33,10 @@ function initRoutes(app){
 
 
 
+    /* Admin Routes */
+    app.get('/admin/orders', adminMiddleware, adminOrderController().index);
     
+
 }
 
 

@@ -29,9 +29,9 @@ function init(passport){
 
     /* What we store after login */
     passport.serializeUser((user, done)=>{
-        console.log("passport => serializeUser => user =>", user);
-        console.log("passport => serializeUser => done => ", done);
-
+        // console.log("passport => serializeUser => user =>", user);
+        // console.log("passport => serializeUser => done => ", done);
+        
         done(null, user._id);
     });
 

@@ -4,6 +4,15 @@ const passport = require('passport');
 const User = require('../../models/user.js');
 
 function authController(){
+
+    const _getRedirectUrl = async(req)=>{
+        const userInfo = await User.findOne({'_id': req.session.passport.user});
+        if(userInfo.role=='admin'){
+            return '/admin/orders';
+        }
+        return '/customer/orders';
+    }
+
     return{
         login(req, res){
             res.render("auth/login");
@@ -35,7 +44,9 @@ function authController(){
                         return next(err);
                     }
 
-                    return res.redirect('/');
+                    _getRedirectUrl(req).then(url=>{
+                        return res.redirect(url);
+                    });
                 });
             })(req, res, next);
         },
