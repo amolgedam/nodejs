@@ -30,6 +30,7 @@ function initRoutes(app){
     /* Customer Routes */
     app.post('/orders', authMiddleware, orderController().store);
     app.get('/customer/orders', authMiddleware, orderController().index);
+    app.get('/customer/orders/:id', authMiddleware, orderController().show);
 
 
 

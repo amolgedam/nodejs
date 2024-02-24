@@ -45,6 +45,17 @@ function orderController(){
                 req.flash('error', 'Something went wrong!');
                 return res.redirect('/cart');
             });
+        },
+        async show(req, res){
+            const order = await Order.findById(req.params.id);
+
+            // Check Autorized customer
+            if(req.session.passport.user.toString() === order.customerId.toString()){
+                return res.render('customers/single-order', {order});
+            }else{
+                return res.redirect('/customer/orders');
+            }
+
         }
     }
 }
