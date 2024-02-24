@@ -10,6 +10,7 @@ const orderController = require('../app/http/controllers/customers/orderControll
 
 /* Admin Controllers */
 const adminOrderController = require('../app/http/controllers/admin/orderController.js');
+const adminStatusController = require('../app/http/controllers/admin/statusController.js');
 
 function initRoutes(app){
 
@@ -35,6 +36,7 @@ function initRoutes(app){
 
     /* Admin Routes */
     app.get('/admin/orders', adminMiddleware, adminOrderController().index);
+    app.post('/admin/order/status', adminMiddleware, adminStatusController().update);
     
 
 }
