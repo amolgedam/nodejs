@@ -40,9 +40,7 @@ Socket.io:-
         layouts.ejs
         server.js
         app.js
-
-
-
+        statusControlller.js
 
 
 michanisms to get data from server.js to Controller =>  event emitter

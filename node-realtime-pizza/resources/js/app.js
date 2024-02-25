@@ -44,11 +44,6 @@ if(alertMsg) {
 }
 
 
-
-
-/* Call Admin.js */
-initAdmin();
-
 let statuses = document.querySelectorAll('.status_line');
 let hiddenInput = document.querySelector("#hiddenInput");
 let order = hiddenInput ? hiddenInput.value : null;
@@ -93,6 +88,18 @@ if(order){
     // Join key given
     socket.emit('join', `order_${order._id}`);
 }
+
+
+/* Call Admin.js */
+initAdmin(socket);
+
+/* Socket for admin show orders without refresh page */
+let adminAreaPath = window.location.pathname;
+console.log(adminAreaPath);
+if(adminAreaPath.includes('admin')){
+    socket.emit('join', 'adminOrderRoom')
+}
+
 
 /* Watch Event updated or Not from io.to server.js */
 socket.on('orderUpdated', (data)=>{

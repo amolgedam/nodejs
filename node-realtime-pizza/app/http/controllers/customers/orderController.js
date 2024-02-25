@@ -37,8 +37,20 @@ function orderController(){
 
                 delete req.session.cart;
 
-                req.flash('success', 'Order placed successfully');
-                return res.redirect('/customer/orders');
+                /* Emit Order for admin */
+                Order.populate(result, {path:'customerId'}).then(placedOrder=>{
+                    
+                    console.log("placedOrder => ", placedOrder);
+
+                    const eventEmitter = res.app.get('eventEmitter');
+                    eventEmitter.emit('orderPlaced', placedOrder);
+    
+                    req.flash('success', 'Order placed successfully');
+                    return res.redirect('/customer/orders');     
+
+                }).catch(err=>{
+                    console.log(err);
+                });                
 
             }).catch(err=>{
                 console.log(err);

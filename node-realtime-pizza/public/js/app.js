@@ -12,18 +12,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   initAdmin: () => (/* binding */ initAdmin)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
+/* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(noty__WEBPACK_IMPORTED_MODULE_1__);
 
 
-// import Noty from 'noty';
 
-function initAdmin() {
+function initAdmin(socket) {
   var orderTableBody = document.querySelector('#orderTableBody');
   var orders = [];
   var markup;
-  axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('/admin/orders', {
+  axios__WEBPACK_IMPORTED_MODULE_2__["default"].get('/admin/orders', {
     headers: {
       "X-Requested-With": "XMLHttpRequest"
     }
@@ -45,6 +46,19 @@ function initAdmin() {
       return "\n                <p>".concat(menuItem.item.name, " - ").concat(menuItem.qty, " pcs </p>\n            ");
     }).join('');
   }
+
+  /* Socket Use here! */
+  socket.on('orderPlaced', function (order) {
+    new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
+      type: 'success',
+      timeout: 1000,
+      text: 'New Order!',
+      progressBar: false
+    }).show();
+    orders.unshift(order);
+    orderTableBody.innerHTML = '';
+    orderTableBody.innerHTML = generateMarup(orders);
+  });
 }
 
 /***/ }),
@@ -107,9 +121,6 @@ if (alertMsg) {
     alertMsg.remove();
   }, 2000);
 }
-
-/* Call Admin.js */
-(0,_admin_js__WEBPACK_IMPORTED_MODULE_2__.initAdmin)();
 var statuses = document.querySelectorAll('.status_line');
 var hiddenInput = document.querySelector("#hiddenInput");
 var order = hiddenInput ? hiddenInput.value : null;
@@ -147,6 +158,16 @@ var socket = io();
 if (order) {
   // Join key given
   socket.emit('join', "order_".concat(order._id));
+}
+
+/* Call Admin.js */
+(0,_admin_js__WEBPACK_IMPORTED_MODULE_2__.initAdmin)(socket);
+
+/* Socket for admin show orders without refresh page */
+var adminAreaPath = window.location.pathname;
+console.log(adminAreaPath);
+if (adminAreaPath.includes('admin')) {
+  socket.emit('join', 'adminOrderRoom');
 }
 
 /* Watch Event updated or Not from io.to server.js */

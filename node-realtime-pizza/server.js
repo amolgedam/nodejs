@@ -106,3 +106,7 @@ eventEmitter.on('orderUpdated', (data)=>{
     io.to(`order_${data.id}`).emit('orderUpdated', data);
 });
 
+eventEmitter.on('orderPlaced', (data)=>{
+    // Room name and send to admin
+    io.to(`adminOrderRoom`).emit('orderPlaced', data);
+})
