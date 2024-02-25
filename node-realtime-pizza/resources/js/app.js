@@ -90,13 +90,14 @@ if(order){
 }
 
 
-/* Call Admin.js */
-initAdmin(socket);
-
 /* Socket for admin show orders without refresh page */
 let adminAreaPath = window.location.pathname;
 console.log(adminAreaPath);
 if(adminAreaPath.includes('admin')){
+
+    /* Call Admin.js */
+    initAdmin(socket);
+
     socket.emit('join', 'adminOrderRoom')
 }
 

@@ -160,13 +160,12 @@ if (order) {
   socket.emit('join', "order_".concat(order._id));
 }
 
-/* Call Admin.js */
-(0,_admin_js__WEBPACK_IMPORTED_MODULE_2__.initAdmin)(socket);
-
 /* Socket for admin show orders without refresh page */
 var adminAreaPath = window.location.pathname;
 console.log(adminAreaPath);
 if (adminAreaPath.includes('admin')) {
+  /* Call Admin.js */
+  (0,_admin_js__WEBPACK_IMPORTED_MODULE_2__.initAdmin)(socket);
   socket.emit('join', 'adminOrderRoom');
 }
 
