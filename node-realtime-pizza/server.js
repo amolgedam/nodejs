@@ -11,6 +11,8 @@ const MongoDbStore = require('connect-mongo');
 
 const passport = require('passport');
 
+const Emitter = require('events');
+
 /* DB Connections */
 const mongoURI = process.env.MONGO_DB_URL;
 
@@ -31,6 +33,10 @@ let mongoStoreOption = {
     mongoUrl: mongoURI,
     collection: 'sessions'
 };
+
+/* Event Emitter */
+const eventEmitter = new Emitter();
+app.set('eventEmitter', eventEmitter);
 
 /* Session config */
 app.use(session({
@@ -72,6 +78,31 @@ app.use(expressLayout);
 require('./routes/web.js')(app);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, ()=>{
+const server = app.listen(PORT, ()=>{
     console.log(`Server run on PORT ${PORT}`);
-})
+});
+
+/* Socket */
+const io = require('socket.io')(server);
+io.on('connection', (socket) => {
+    /* Join client room it require unique from App.js */
+    console.log(socket.id);
+
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    socket.on('join', (orderId)=>{
+        console.log(orderId);
+        socket.join(orderId);
+
+    });
+
+});
+
+eventEmitter.on('orderUpdated', (data)=>{
+    // Room name and send to client
+    io.to(`order_${data.id}`).emit('orderUpdated', data);
+});
+

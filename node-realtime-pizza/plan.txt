@@ -32,3 +32,19 @@ npx mix watch
 #   Create login page with route
 #
 
+===============================================================
+Socket.io:-
+    npm install socket.io
+
+    pages:-
+        layouts.ejs
+        server.js
+        app.js
+
+
+
+
+
+michanisms to get data from server.js to Controller =>  event emitter
+e.g. call specifice event after complete any task.
+

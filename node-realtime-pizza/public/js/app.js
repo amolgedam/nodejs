@@ -63,6 +63,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _admin_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin.js */ "./resources/js/admin.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -113,6 +119,12 @@ var time = document.createElement('small');
 /* Change Order status */
 function updateStatus(order) {
   var stepCompleted = true;
+
+  /* Remove old status */
+  statuses.forEach(function (status) {
+    status.classList.remove('step-completed');
+    status.classList.remove('current');
+  });
   statuses.forEach(function (status) {
     var dataProp = status.dataset.status;
     if (stepCompleted) {
@@ -129,6 +141,28 @@ function updateStatus(order) {
   });
 }
 updateStatus(order);
+
+/* Socket Use here! */
+var socket = io();
+if (order) {
+  // Join key given
+  socket.emit('join', "order_".concat(order._id));
+}
+
+/* Watch Event updated or Not from io.to server.js */
+socket.on('orderUpdated', function (data) {
+  var updatedOrder = _objectSpread({}, order);
+  updatedOrder.updatedAt = moment__WEBPACK_IMPORTED_MODULE_1___default()().format();
+  updatedOrder.status = data.status;
+  console.log('OrderUpdated', data);
+  updateStatus(updatedOrder);
+  new (noty__WEBPACK_IMPORTED_MODULE_0___default())({
+    type: 'success',
+    timeout: 1000,
+    text: 'Order updated!',
+    progressBar: false
+  }).show();
+});
 
 /***/ }),
 
