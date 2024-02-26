@@ -46,3 +46,20 @@ Socket.io:-
 michanisms to get data from server.js to Controller =>  event emitter
 e.g. call specifice event after complete any task.
 
+===============================================================
+Deploy project to server:-
+    https://www.youtube.com/watch?v=71IJIRMpWsU&list=PLXQpH_kZIxTVRmXQN9J0Az76te5mAreLV&index=11
+
+    1.  How to install NodeJs on the server
+    2.  How to install MongoDb on the server
+    3.  Nginx web server setup + reverse proxy =>Load balancing and micro service
+    4.  Git on server + Git hooks
+    5.  Domain DNS Settings.
+    6.  Free SSL Certificate (HTTPS)
+    7.  Setup firewall
+
+
+
+
+
+
