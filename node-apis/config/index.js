@@ -1,9 +1,9 @@
 export default {
-    JWT_TOKEN: "a3GvmkCYX+JsI9dPMt7+ffMWkuXQWFTjIVPj34cpD98=",
+    JWT_TOKEN: "",
     EMAIL_ETHEREAL: {
-        HOST: "smtp.ethereal.email",
+        HOST: "",
         PORT: 587,
-        USERNAME: "immanuel88@ethereal.email",
-        PASSWORD: "34JPeHHsY4QR7R8Aqv",
+        USERNAME: "",
+        PASSWORD: "",
     },
 }

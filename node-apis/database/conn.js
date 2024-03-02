@@ -8,7 +8,8 @@ async function connect(){
 
     mongoose.set('strictQuery', true);
 
-    const db = await mongoose.connect('mongodb+srv://amolgedam1994:22H3e67bG7MVUmMI@mernbookingapp.stvtb3m.mongodb.net/?retryWrites=true&w=majority');
+    const DBPath = 'mongodb+srv://amolgedam1994:22H3e67bG7MVUmMI@mernbookingapp.stvtb3m.mongodb.net/?retryWrites=true&w=majority';
+    const db = await mongoose.connect(DBPath);
     console.log('Database connected');
     return db;
 }
