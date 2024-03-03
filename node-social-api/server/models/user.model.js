@@ -27,6 +27,17 @@ const userSchema = new Schema({
     isAdmin: {
         type: Boolean,
         default: false,
+    },
+    desc: {
+        type: String
+    },
+    from: {
+        type: String
+    },
+    relationship: {
+        type: Number,
+        /* 1=> Single, 2=> relationship, 3=>Complecated */
+        enum: [1, 2, 3],
     }
 });
 
