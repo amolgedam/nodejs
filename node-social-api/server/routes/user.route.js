@@ -1,12 +1,13 @@
 import express from 'express';
-import { updateUserController } from '../controllers/user.controller.js';
+import { deleteUserController, updateUserController } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
 /* Update User */
-router.put('/:id', updateUserController)
+router.put('/:id', updateUserController);
 
 /* Delete User */
+router.delete('/:id', deleteUserController);
 
 /* Get User */
 

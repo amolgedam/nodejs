@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 
 import UserModel from '../models/user.model.js';
 
-
 export const updateUser = async(userId, updateData)=>{
     if(updateData.password){
         try {
@@ -21,6 +20,14 @@ export const updateUser = async(userId, updateData)=>{
         });
 
         return user;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const deleteUser = async(userId)=>{
+    try {
+        await UserModel.findByIdAndDelete(userId);
     } catch (err) {
         throw err;
     }
