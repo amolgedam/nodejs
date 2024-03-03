@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteUserController, updateUserController } from '../controllers/user.controller.js';
+import { deleteUserController, getUserController, updateUserController } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
@@ -10,9 +10,6 @@ router.put('/:id', updateUserController);
 router.delete('/:id', deleteUserController);
 
 /* Get User */
-
-router.get('/', (req, res)=>{
-    res.send('These are test route');
-})
+router.get('/:id', getUserController);
 
 export default router;
