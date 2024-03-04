@@ -10,3 +10,23 @@ export const createPost =async(body)=>{
         throw error;
     }
 }
+
+export const updatePost=async(params, body)=>{
+    try {
+        const updatedPost = await PostModel.findById(params.id);
+        if(updatedPost.userId === body.userId){
+            await updatedPost.updateOne({
+                $set: body,
+            }, {
+                new: true
+            });
+
+            return updatedPost;
+        }
+        else{
+            throw new Error('You can update only your post');
+        }
+    } catch (error) {
+        throw error
+    }
+}
