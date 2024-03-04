@@ -31,7 +31,6 @@ export const updatePost=async(params, body)=>{
     }
 }
 
-
 export const deletePost=async(params, body)=>{
     try {
         const deletedPost = await PostModel.findById(params.id);
@@ -42,6 +41,28 @@ export const deletePost=async(params, body)=>{
         else{
             throw new Error('You can delete only your post');
         }
+    } catch (error) {
+        throw error
+    }
+}
+
+export const likeAndDislikePost=async(params, body)=>{
+    try {
+        const post = await PostModel.findById(params.id);
+
+        if(!post.likes.includes(body.userId)){
+            /* Like */
+            await post.updateOne({
+                $push: {likes: body.userId}
+            });
+        }
+        else{
+            /* Dislike */
+            await post.updateOne({
+                $pull: {likes: body.userId}
+            });
+        }
+        return post;
     } catch (error) {
         throw error
     }

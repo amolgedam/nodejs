@@ -1,4 +1,4 @@
-import { createPost, deletePost, updatePost } from "../services/post.service.js";
+import { createPost, deletePost, likeAndDislikePost, updatePost } from "../services/post.service.js";
 
 export const createPostController =async(req, res)=>{
     try {
@@ -46,6 +46,23 @@ export const deletePostController =async(req, res)=>{
         res.status(500).json({
             err,
             message: "Post deletion failed"
+        });
+    }
+}
+
+export const likeAndDislikePostController =async(req, res)=>{
+    try {
+        const post = await likeAndDislikePost(req.params, req.body);
+        res.status(200).json({
+            post,
+            message: "Post like and dislike action has been completed"
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error,
+            message: "Post like and dislike action failed"
         });
     }
 }
