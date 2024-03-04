@@ -1,4 +1,4 @@
-import { deleteUser, getUser, updateUser } from "../services/user.service.js";
+import { deleteUser, followUser, getUser, unfollowUser, updateUser } from "../services/user.service.js";
 
 export const updateUserController = async(req, res)=>{
     if(req.body.id === req.params.id || req.body.isAdmin){
@@ -42,6 +42,34 @@ export const getUserController = async(req, res)=>{
         res.status(200).json({
             data,
             message: "User details"
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+}
+
+export const followUserController = async(req, res)=>{
+    try {
+        const data = await followUser(req.body, req.params);
+
+        res.status(200).json({
+            data,
+            message: "User follow detail"
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+}
+
+export const unfollowUserController = async(req, res)=>{
+    try {
+        const data = await unfollowUser(req.body, req.params);
+
+        res.status(200).json({
+            data,
+            message: "User unfollow details"
         })
     } catch (err) {
         console.log(err);

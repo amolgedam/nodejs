@@ -38,6 +38,14 @@ const userSchema = new Schema({
         type: Number,
         /* 1=> Single, 2=> relationship, 3=>Complecated */
         enum: [1, 2, 3],
+    },
+    followers: {
+        type: Array,
+        default: [],
+    },
+    followings: {
+        type: Array,
+        default: [],
     }
 });
 
