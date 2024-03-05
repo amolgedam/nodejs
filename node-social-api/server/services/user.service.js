@@ -57,7 +57,7 @@ export const followUser = async(userdata, updatedData)=>{
                 });
     
                 await currentUser.updateOne({
-                    $push: {followers: userdata.userId}
+                    $push: {followings: userdata.userId}
                 });
     
                 return {user, currentUser}
@@ -86,7 +86,7 @@ export const unfollowUser = async(userdata, updatedData)=>{
                 }, {new: true});
     
                 await currentUser.updateOne({
-                    $pull: {followers: userdata.userId}
+                    $pull: {followings: userdata.userId}
                 }, {new: true});
     
                 return {user, currentUser}

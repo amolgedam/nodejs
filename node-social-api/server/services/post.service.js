@@ -1,5 +1,6 @@
 
 import PostModel from '../models/post.model.js';
+import UserModel from '../models/user.model.js';
 
 export const createPost =async(body)=>{
     try {
@@ -63,6 +64,37 @@ export const likeAndDislikePost=async(params, body)=>{
             });
         }
         return post;
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getPost=async(params)=>{
+    try {
+        const post = await PostModel.findById(params.id);
+        return post;
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getTimelinePosts=async(body)=>{
+    try {
+        console.log(body);
+        // const currentUser = await UserModel.findById(body.userId);
+        // const userPosts = await PostModel.find({
+        //     userId: currentUser._id
+        // });
+        // const timelinePosts = await Promise.all(
+        //     currentUser.followings.map((friendId)=>{
+        //         return PostModel.find({
+        //             userId: friendId
+        //         });
+        //     })
+        // )
+
+        return [];
+        // return userPosts.concat({...timelinePosts});
     } catch (error) {
         throw error
     }
